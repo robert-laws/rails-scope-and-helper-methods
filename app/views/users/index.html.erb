@@ -1,0 +1,29 @@
+<h1>All Users</h1>
+
+<%= form_tag("/users", method: "get") do %>
+  <%= number_field_tag "experience" %>
+  <%= submit_tag "Filter" %>
+<% end %>
+
+<%= link_to "Five Years Experience", users_path(experience: 5), method: :get %>
+
+<table class="pretty">
+  <tr>
+    <th><%= sortable "name" %></th>
+    <th><%= sortable "age" %></th>
+    <th><%= sortable "experience" %></th>
+    <th><%= sortable "ux_skill", "UX Skill" %></th>
+    <th><%= sortable "web_skill", "Web Skill" %></th>
+    <th><%= sortable "db_skill", "Database Skill" %></th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.age %></td>
+      <td><%= plural_value(user.experience, 'year') %></td>
+      <td><%= content_tag(:span, user.ux_skill, class: skill_level(user.ux_skill)) %></td>
+      <td><%= content_tag(:span, user.web_skill, class: skill_level(user.web_skill)) %></td>
+      <td><%= content_tag(:span, user.db_skill, class: skill_level(user.db_skill)) %></td>
+    </tr>
+  <% end %>
+</table>
